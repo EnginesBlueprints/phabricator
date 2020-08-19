@@ -16,7 +16,7 @@
         "patch": 0
       }
     },
-    "timestamp": "2020-08-19T13:37:06+10:00"
+    "timestamp": "2020-08-19T13:38:11+10:00"
   },
   "software": {
     "base": {
@@ -24,6 +24,7 @@
       "framework": "apache_php",
       "deployment_type": "web",
       "http_protocol": "https_only",
+      "web_root_directory": "phabricator/webroot",
       "memory": {
         "required": 256
       }
