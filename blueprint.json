@@ -16,7 +16,7 @@
         "patch": 0
       }
     },
-    "timestamp": "2020-08-19T12:45:56+10:00"
+    "timestamp": "2020-08-19T13:02:19+10:00"
   },
   "software": {
     "base": {
@@ -58,6 +58,10 @@
         "name": "iconv",
         "type": "php",
         "os_package": "php-iconv"
+      },
+      {
+        "name": "rewrite",
+        "type": "apache"
       }
     ],
     "service_configurations": [
@@ -88,6 +92,13 @@
           "exclude_from_backup": "false"
         }
       }
-    ]
+    ],
+    "framework_specific": {
+      "apache_httpd_configurations": [
+        {
+          "content": " RewriteEngine on\r\n  RewriteRule ^(.*)$          /index.php?__path__=$1  [B,L,QSA]"
+        }
+      ]
+    }
   }
 }
