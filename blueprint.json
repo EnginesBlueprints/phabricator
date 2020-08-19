@@ -16,7 +16,7 @@
         "patch": 0
       }
     },
-    "timestamp": "2020-08-19T13:51:19+10:00"
+    "timestamp": "2020-08-19T14:00:27+10:00"
   },
   "software": {
     "base": {
@@ -106,6 +106,19 @@
         "type_path": "database/sql/mysql",
         "variables": {
           "database_name": "phabricator_meta_data",
+          "database_host": "_Engines_System(mysql_host)",
+          "db_username": "_Engines_Builder(engine_name)",
+          "db_password": "fucked",
+          "collation": "utf8_general_ci",
+          "full_access": "false",
+          "char_set": "utf8"
+        }
+      },
+      {
+        "publisher_namespace": "EnginesSystem",
+        "type_path": "database/sql/mysql",
+        "variables": {
+          "database_name": "phabricator_almanac",
           "database_host": "_Engines_System(mysql_host)",
           "db_username": "_Engines_Builder(engine_name)",
           "db_password": "fucked",
