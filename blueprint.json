@@ -16,7 +16,7 @@
         "patch": 0
       }
     },
-    "timestamp": "2020-08-19T13:38:11+10:00"
+    "timestamp": "2020-08-19T13:48:17+10:00"
   },
   "software": {
     "base": {
@@ -78,7 +78,7 @@
         "publisher_namespace": "EnginesSystem",
         "type_path": "database/sql/mysql",
         "variables": {
-          "database_name": "_Engines_Builder(engine_name)",
+          "database_name": "phabricator_config",
           "database_host": "_Engines_System(mysql_host)",
           "db_username": "_Engines_Builder(engine_name)",
           "db_password": "_Engines_System(random(10))",
