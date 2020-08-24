@@ -16,7 +16,7 @@
         "patch": 0
       }
     },
-    "timestamp": "2020-08-24T14:12:36+10:00"
+    "timestamp": "2020-08-24T14:33:51+10:00"
   },
   "software": {
     "base": {
@@ -35,6 +35,9 @@
       }
     },
     "system_packages": [
+      {
+        "package": "nodejs"
+      },
       {
         "package": "npm"
       }
