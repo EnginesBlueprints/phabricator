@@ -16,7 +16,7 @@
         "patch": 0
       }
     },
-    "timestamp": "2020-08-19T14:05:02+10:00"
+    "timestamp": "2020-08-24T14:12:36+10:00"
   },
   "software": {
     "base": {
@@ -31,9 +31,14 @@
     },
     "scripts": {
       "start": {
-        "content": "#!/bin/bash\r\n\r\nsleep 600"
+        "content": "#!/bin/bash\r\n\r\napachectl start\r\ncd /home/app/phabricator\r\n\r\nsleep 600"
       }
     },
+    "system_packages": [
+      {
+        "package": "npm"
+      }
+    ],
     "installed_packages": [
       {
         "name": "phabricator",
@@ -71,6 +76,11 @@
         "name": "curl",
         "type": "php",
         "os_package": "php-curl"
+      },
+      {
+        "name": "ldap",
+        "type": "php",
+        "os_package": "php-ldap"
       }
     ],
     "service_configurations": [
@@ -100,9 +110,64 @@
           "fw_user": "_Engines_Builder(cont_user_id)",
           "exclude_from_backup": "false"
         }
+      },
+      {
+        "publisher_namespace": "EnginesSystem",
+        "type_path": "ldap_access",
+        "variables": {
+          "access_dn": "uid=_Engines_Builder(engine_name),ou=hosts,ou=Engines,dc=engines,dc=internal",
+          "ldap_password": "_Engines_System(random(8))",
+          "service_name": "_Engines_Builder(engine_name)",
+          "type": "access",
+          "group_membership": null
+        }
+      },
+      {
+        "publisher_namespace": "EnginesSystem",
+        "type_path": "ldap_group",
+        "variables": {
+          "type": "group",
+          "cn": "_Engines_Builder(engine_name)_users",
+          "read_access": "all",
+          "write_access": "none",
+          "service_name": "group_Engines_Field(cn)"
+        }
+      },
+      {
+        "publisher_namespace": "EnginesSystem",
+        "type_path": "ldap_ou",
+        "variables": {
+          "type": "ou",
+          "cn": null,
+          "read_access": "all",
+          "write_access": null,
+          "service_name": "ou_Engines_Field(cn)"
+        }
+      },
+      {
+        "publisher_namespace": "EnginesSystem",
+        "type_path": "ldap_group",
+        "variables": {
+          "type": "group",
+          "cn": "_Engines_Builder(engine_name)_admins",
+          "read_access": "all",
+          "write_access": "none",
+          "service_name": "group_Engines_Field(cn)"
+        }
+      }
+    ],
+    "template_files": [
+      {
+        "path": "/home/app/phabricator/conf/local/local.json",
+        "content": "{                                                                                                                                                                                                                                                  \r\n  \"phabricator.base-uri\": \"Engines_Environment(fqdn)\",                                                                                                                                                                                 \r\n  \"mysql.pass\": \"Engines_Environment(dbpasswd)\",                                                                                                                                                                                                                          \r\n  \"mysql.user\": \"\"Engines_Environment(dbuser)\",                                                                                                                                                                                                                     \r\n  \"mysql.host\": \"\"Engines_Environment(dbhostd)\"                                                                                                                                                                                                          \r\n}"
       }
     ],
     "framework_specific": {
+      "custom_php_inis": [
+        {
+          "content": "post_max_size\t\"32M\""
+        }
+      ],
       "apache_httpd_configurations": [
         {
           "content": " RewriteEngine on\r\n  RewriteRule ^(.*)$          /index.php?__path__=$1  [B,L,QSA]"
