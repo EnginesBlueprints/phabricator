@@ -16,7 +16,7 @@
         "patch": 0
       }
     },
-    "timestamp": "2020-08-26T11:52:22+10:00"
+    "timestamp": "2020-08-26T14:38:07+10:00"
   },
   "software": {
     "base": {
@@ -31,11 +31,11 @@
     },
     "scripts": {
       "start": {
-        "content": "#!/bin/bash\r\n\r\napachectl start\r\ncd /home/app/phabricator\r\n\r\nsleep 600"
+        "content": "#!/bin/bash\r\n\r\n/home/app/phabricator/bin/phd start\r\n\r\napachectl start\r\ncd /home/app/phabricator\r\n\r\nsleep 600"
       },
       "first_run": {
         "language": "sh",
-        "content": "#!/bin/sh\r\n\r\n /home/app/phabricator/./bin/storage --force upgrade "
+        "content": "#!/bin/sh\r\ndomain=`echo $fqdn | cut -f2- -d .`\r\n /home/app/phabricator/bin/storage --force upgrade \r\n /home/app/phabricator/bin/config  set security.alternate-file-domain https://files.$domain/\r\n /home/app/phabricator/bin/config set --stdin cluster.mailers < /home/app/mailers.json\r\n "
       }
     },
     "system_packages": [
@@ -85,6 +85,15 @@
         "name": "ldap",
         "type": "php",
         "os_package": "php-ldap"
+      },
+      {
+        "name": "zip",
+        "type": "php",
+        "os_package": "php-zip"
+      },
+      {
+        "name": "pygments",
+        "type": "python"
       }
     ],
     "service_configurations": [
@@ -97,7 +106,7 @@
           "db_username": "_Engines_Builder(engine_name)",
           "db_password": "fucked",
           "collation": "utf8_general_ci",
-          "full_access": "grant",
+          "full_access": "true",
           "char_set": "utf8"
         }
       },
@@ -158,18 +167,52 @@
           "write_access": "none",
           "service_name": "group_Engines_Field(cn)"
         }
+      },
+      {
+        "publisher_namespace": "EnginesSystem",
+        "type_path": "filesystem/local/filesystem",
+        "variables": {
+          "service_name": "_Engines_Builder(engine_name)",
+          "volume_src": "",
+          "engine_path": "/home/fs/repo",
+          "permissions": "rw",
+          "user": "_Engines_Builder(cont_user_id)",
+          "group": "_Engines_Builder(data_gid)",
+          "fw_user": "_Engines_Builder(cont_user_id)",
+          "exclude_from_backup": "false"
+        }
+      },
+      {
+        "publisher_namespace": "EnginesSystem",
+        "type_path": "wap",
+        "variables": {
+          "fqdn": "files._Engines_Environment(fadn)",
+          "proto": "https",
+          "port": "8000",
+          "internal_dir": "/",
+          "public": "true",
+          "engine_count": "1",
+          "system_auth": "false",
+          "auth_group": "_Engines_Builder(engine_name)",
+          "require_client_ssl": "false",
+          "ca_name": ""
+        }
       }
     ],
     "template_files": [
       {
         "path": "/home/app/phabricator/conf/local/local.json",
-        "content": "{                                                                                                                                                                                                                                                  \r\n  \"phabricator.base-uri\": \"https://Engines_Environment(fqdn)/\",                                                                                                                                                                                 \r\n  \"mysql.pass\": \"_Engines_Environment(dbpasswd)\",                                                                                                                                                                                                                          \r\n  \"mysql.user\": \"_Engines_Environment(dbuser)\",                                                                                                                                                                                                                     \r\n  \"mysql.host\": \"_Engines_Environment(dbhostd)\"                                                                                                                                                                                                          \r\n}"
+        "content": "{        \r\n  \"repository.default-local-path\": \"/home/fs/repo\",\r\n  \"storage.local-disk.path\": \"/home/fs/persist\",\r\n  \"phabricator.base-uri\": \"https://_Engines_Environment(fqdn)/\",                                                                                                                                                                                 \r\n  \"mysql.pass\": \"_Engines_Environment(dbpasswd)\",                                                                                                                                                                                                                          \r\n  \"mysql.user\": \"_Engines_Environment(dbuser)\",                                                                                                                                                                                                                     \r\n  \"mysql.host\": \"_Engines_Environment(dbhost)\"                                                                                                                                                                                                          \r\n}"
+      },
+      {
+        "path": "/home/app/mailers.json",
+        "content": "[\r\n  {\r\n    \"key\": \"mailer\",\r\n    \"type\": \"smtp\",\r\n    \"options\": {\r\n     \"host\": \"smtp\"\r\n    }\r\n  }\r\n]\r\n"
       }
     ],
     "framework_specific": {
       "custom_php_inis": [
         {
-          "content": "post_max_size\t\"32M\""
+          "content": "post_max_size\t32M"
         }
       ],
       "apache_httpd_configurations": [
