@@ -16,7 +16,7 @@
         "patch": 0
       }
     },
-    "timestamp": "2020-08-26T14:38:07+10:00"
+    "timestamp": "2020-08-27T17:15:49+10:00"
   },
   "software": {
     "base": {
@@ -35,7 +35,7 @@
       },
       "first_run": {
         "language": "sh",
-        "content": "#!/bin/sh\r\ndomain=`echo $fqdn | cut -f2- -d .`\r\n /home/app/phabricator/bin/storage --force upgrade \r\n /home/app/phabricator/bin/config  set security.alternate-file-domain https://files.$domain/\r\n /home/app/phabricator/bin/config set --stdin cluster.mailers < /home/app/mailers.json\r\n "
+        "content": "#!/bin/sh\r\ndomain=`echo $fqdn | cut -f2- -d .`\r\n /home/app/phabricator/bin/storage --force upgrade \r\n /home/app/phabricator/bin/config  set security.alternate-file-domain https://files.$domain/\r\n /home/app/phabricator/bin/config set --stdin cluster.mailers < /home/app/mailers.json\r\n /home/app/phabricator/bin/config set phabricator.base-uri https://$fqdn/\r\n"
       }
     },
     "system_packages": [
@@ -186,7 +186,7 @@
         "publisher_namespace": "EnginesSystem",
         "type_path": "wap",
         "variables": {
-          "fqdn": "files._Engines_Environment(fadn)",
+          "fqdn": "files._Engines_Environment(fqdn)",
           "proto": "https",
           "port": "8000",
           "internal_dir": "/",
@@ -212,7 +212,7 @@
     "framework_specific": {
       "custom_php_inis": [
         {
-          "content": "post_max_size\t32M"
+          "content": "post_max_size\t32M\r\nopcache.validate_timestamps\t1"
         }
       ],
       "apache_httpd_configurations": [
