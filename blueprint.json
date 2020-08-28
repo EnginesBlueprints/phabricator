@@ -16,7 +16,7 @@
         "patch": 0
       }
     },
-    "timestamp": "2020-08-28T14:05:09+10:00"
+    "timestamp": "2020-08-28T14:10:00+10:00"
   },
   "software": {
     "base": {
@@ -107,7 +107,7 @@
           "db_username": "_Engines_Builder(engine_name)",
           "db_password": "fucked",
           "collation": "utf8_general_ci",
-          "full_access": "true",
+          "full_access": "full",
           "char_set": "utf8"
         }
       },
