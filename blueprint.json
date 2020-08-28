@@ -16,7 +16,7 @@
         "patch": 0
       }
     },
-    "timestamp": "2020-08-28T13:13:21+10:00"
+    "timestamp": "2020-08-28T14:05:09+10:00"
   },
   "software": {
     "base": {
@@ -144,7 +144,8 @@
           "cn": "_Engines_Builder(engine_name)_users",
           "read_access": "all",
           "write_access": "none",
-          "service_name": "group_Engines_Field(cn)"
+          "service_name": "group_Engines_Field(cn)",
+          "ldap_group_type": "groupOfUniqueNames"
         }
       },
       {
@@ -166,7 +167,8 @@
           "cn": "_Engines_Builder(engine_name)_admins",
           "read_access": "all",
           "write_access": "none",
-          "service_name": "group_Engines_Field(cn)"
+          "service_name": "group_Engines_Field(cn)",
+          "ldap_group_type": "groupOfUniqueNames"
         }
       },
       {
