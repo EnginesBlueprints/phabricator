@@ -16,7 +16,7 @@
         "patch": 0
       }
     },
-    "timestamp": "2020-08-27T17:15:49+10:00"
+    "timestamp": "2020-08-28T13:13:21+10:00"
   },
   "software": {
     "base": {
@@ -27,11 +27,12 @@
       "web_root_directory": "phabricator/webroot",
       "memory": {
         "required": 256
-      }
+      },
+      "installation_report": "Ldap Settings\r\n\r\nChecked\r\n\r\nAllow Login: \r\nAllow Linking Accounts:\r\nAllow Unlinking Accounts:\r\nTrust Email Addresses: \r\n\r\nLDAP Hostname\r\n_Engines_Environment(LDAP_HOST)\r\nLDAP Port 389\r\nBase Distinguished Name\r\nou=People,dc=engines,dc=internal\r\n\r\n\r\nSearch Attributes\r\n(&(uid=${login})(memberOf=cn=users,ou=phabricator,ou=Applications,ou=Groups,dc=engines,dc=internal))\r\n\r\n\r\nAnonymous Username\r\n_Engines_Environment(ldap_dn)\r\nAnonymous Password\r\n_Engines_Environment(ldap_password)\r\n\r\nUsername Attribute\r\nuid\r\n\r\nRealname Attributes\r\ngivenName, sn\r\n\r\n"
     },
     "scripts": {
       "start": {
-        "content": "#!/bin/bash\r\n\r\n/home/app/phabricator/bin/phd start\r\n\r\napachectl start\r\ncd /home/app/phabricator\r\n\r\nsleep 600"
+        "content": "#!/bin/bash\r\n\r\n/home/app/phabricator/bin/phd start\r\n\r\ncd /home/app/phabricator\r\n"
       },
       "first_run": {
         "language": "sh",
