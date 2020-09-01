@@ -16,7 +16,7 @@
         "patch": 0
       }
     },
-    "timestamp": "2020-09-01T12:43:12+10:00"
+    "timestamp": "2020-09-01T13:31:38+10:00"
   },
   "software": {
     "base": {
@@ -200,6 +200,20 @@
           "require_client_ssl": "false",
           "ca_name": ""
         }
+      },
+      {
+        "publisher_namespace": "EnginesSystem",
+        "type_path": "filesystem/local/filesystem",
+        "variables": {
+          "service_name": "config",
+          "volume_src": "",
+          "engine_path": "",
+          "permissions": "rw",
+          "user": "_Engines_Builder(cont_user_id)",
+          "group": "_Engines_Builder(data_gid)",
+          "fw_user": "_Engines_Builder(cont_user_id)",
+          "exclude_from_backup": "false"
+        }
       }
     ],
     "template_files": [
@@ -217,10 +231,16 @@
         "content": "<?php\r\n\r\n$_SERVER['HTTPS'] = true;"
       }
     ],
+    "persistent_files": [
+      {
+        "path": "/home/app/phabricator/conf/local/local.json",
+        "volume_name": "config"
+      }
+    ],
     "framework_specific": {
       "custom_php_inis": [
         {
-          "content": "post_max_size =\t32M\r\nopcache.validate_timestamps =\t1"
+          "content": "post_max_size =\t32M\r\nopcache.validate_timestamps =\t1\r\n\r\n"
         }
       ],
       "apache_httpd_configurations": [
