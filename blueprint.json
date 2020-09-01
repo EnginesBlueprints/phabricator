@@ -16,7 +16,7 @@
         "patch": 0
       }
     },
-    "timestamp": "2020-08-28T14:10:00+10:00"
+    "timestamp": "2020-09-01T12:43:12+10:00"
   },
   "software": {
     "base": {
@@ -105,7 +105,7 @@
           "database_name": "phabricator_dum",
           "database_host": "_Engines_System(mysql_host)",
           "db_username": "_Engines_Builder(engine_name)",
-          "db_password": "fucked",
+          "db_password": "_Engines_System(random(10))",
           "collation": "utf8_general_ci",
           "full_access": "full",
           "char_set": "utf8"
@@ -189,7 +189,7 @@
         "publisher_namespace": "EnginesSystem",
         "type_path": "wap",
         "variables": {
-          "fqdn": "files._Engines_Environment(fqdn)",
+          "fqdn": "files._Engines_Builder(domain_name)",
           "proto": "https",
           "port": "8000",
           "internal_dir": "/",
@@ -205,17 +205,22 @@
     "template_files": [
       {
         "path": "/home/app/phabricator/conf/local/local.json",
-        "content": "{        \r\n  \"repository.default-local-path\": \"/home/fs/repo\",\r\n  \"storage.local-disk.path\": \"/home/fs/persist\",\r\n  \"phabricator.base-uri\": \"https://_Engines_Environment(fqdn)/\",                                                                                                                                                                                 \r\n  \"mysql.pass\": \"_Engines_Environment(dbpasswd)\",                                                                                                                                                                                                                          \r\n  \"mysql.user\": \"_Engines_Environment(dbuser)\",                                                                                                                                                                                                                     \r\n  \"mysql.host\": \"_Engines_Environment(dbhost)\"                                                                                                                                                                                                          \r\n}"
+        "content": "{        \r\n  \"repository.default-local-path\": \"/home/fs/repo\",\r\n  \"storage.local-disk.path\": \"/home/fs/persist\",\r\n  \"phabricator.base-uri\": \"https://_Engines_Builder(fqdn)/\",   \r\n  \"security.alternate-file-domain\": \"https://files._Engines_Builder(domain_name)/\",\r\n  \"mysql.pass\": \"_Engines_Environment(dbpasswd)\",                                                                                                                                                                                                                          \r\n  \"mysql.user\": \"_Engines_Environment(dbuser)\",                                                                                                                                                                                                                     \r\n  \"mysql.host\": \"_Engines_Environment(dbhost)\"                                                                                                                                                                                                          \r\n}"
       },
       {
         "path": "/home/app/mailers.json",
         "content": "[\r\n  {\r\n    \"key\": \"mailer\",\r\n    \"type\": \"smtp\",\r\n    \"options\": {\r\n     \"host\": \"smtp\"\r\n    }\r\n  }\r\n]\r\n"
+      },
+      {
+        "path": "/home/app/phabricator/support/preamble.php",
+        "language": "php",
+        "content": "<?php\r\n\r\n$_SERVER['HTTPS'] = true;"
       }
     ],
     "framework_specific": {
       "custom_php_inis": [
         {
-          "content": "post_max_size\t32M\r\nopcache.validate_timestamps\t1"
+          "content": "post_max_size =\t32M\r\nopcache.validate_timestamps =\t1"
         }
       ],
       "apache_httpd_configurations": [
