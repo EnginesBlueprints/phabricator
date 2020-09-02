@@ -16,7 +16,7 @@
         "patch": 0
       }
     },
-    "timestamp": "2020-09-01T16:53:17+10:00"
+    "timestamp": "2020-09-02T17:43:50+10:00"
   },
   "software": {
     "base": {
@@ -37,6 +37,9 @@
       "first_run": {
         "language": "sh",
         "content": "#!/bin/sh\r\ndomain=`echo $fqdn | cut -f2- -d .`\r\n /home/app/phabricator/bin/storage --force upgrade \r\n /home/app/phabricator/bin/config  set security.alternate-file-domain https://files.$domain/\r\n /home/app/phabricator/bin/config set --stdin cluster.mailers < /home/app/mailers.json\r\n /home/app/phabricator/bin/config set phabricator.base-uri https://$fqdn/\r\n"
+      },
+      "post_install": {
+        "content": "#!/bin/sh\r\n\r\n./bin/auth lock\r\n\r\n"
       }
     },
     "system_packages": [
