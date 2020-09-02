@@ -16,7 +16,7 @@
         "patch": 0
       }
     },
-    "timestamp": "2020-09-01T13:31:38+10:00"
+    "timestamp": "2020-09-01T16:53:17+10:00"
   },
   "software": {
     "base": {
@@ -240,7 +240,7 @@
     "framework_specific": {
       "custom_php_inis": [
         {
-          "content": "post_max_size =\t32M\r\nopcache.validate_timestamps =\t1\r\n\r\n"
+          "content": "post_max_size =\t32M\r\nopcache.validate_timestamps = 0\r\n\r\n"
         }
       ],
       "apache_httpd_configurations": [
